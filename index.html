@@ -3,102 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analista de Riesgo - Emprendedores México</title>
+    <title>Riesgo Cero - Analista de Importación</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .semaforo-verde { background-color: #22c55e; }
-        .semaforo-amarillo { background-color: #eab308; }
-        .semaforo-rojo { background-color: #ef4444; }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-gray-100 p-5">
-    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow">
-        <h1 class="text-2xl font-bold mb-6 text-blue-800">Analista de Riesgo: Importación y Venta (México)</h1>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <header class="bg-blue-900 text-white p-4 shadow-lg">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-black tracking-tighter">RIESGO<span class="text-blue-400">CERO</span></h1>
+            <span class="text-xs bg-blue-700 px-2 py-1 rounded">MÉXICO v1.0</span>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-4 md:p-8">
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-                <label class="block font-medium">Costo del Producto (Unitario CNY/USD):</label>
-                <input type="number" id="costoProducto" class="w-full border p-2 rounded mb-3" placeholder="0.00">
-                
-                <label class="block font-medium">Costo de Envío a México (Total):</label>
-                <input type="number" id="costoEnvio" class="w-full border p-2 rounded mb-3" placeholder="0.00">
-                
-                <label class="block font-medium">Unidades a comprar:</label>
-                <input type="number" id="unidades" class="w-full border p-2 rounded mb-3" placeholder="1">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-2 space-y-6">
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-calculator mr-2 text-blue-600"></i> Datos de Inversión
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600">Costo Unitario (USD/CNY a MXN)</label>
+                            <input type="number" id="costoProducto" class="w-full border-2 border-slate-100 p-3 rounded-lg focus:border-blue-500 outline-none transition" placeholder="0.00">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600">Costo Envío Total a México</label>
+                            <input type="number" id="costoEnvio" class="w-full border-2 border-slate-100 p-3 rounded-lg focus:border-blue-500 outline-none transition" placeholder="0.00">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600">Unidades en el pedido</label>
+                            <input type="number" id="unidades" class="w-full border-2 border-slate-100 p-3 rounded-lg focus:border-blue-500 outline-none transition" placeholder="1">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600">Precio de Venta al Cliente</label>
+                            <input type="number" id="precioVenta" class="w-full border-2 border-slate-100 p-3 rounded-lg focus:border-blue-500 outline-none transition" placeholder="0.00">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-shield-halved mr-2 text-blue-600"></i> Cumplimiento y Aduana
+                    </h2>
+                    <select id="tipoProducto" class="w-full border-2 border-slate-100 p-3 rounded-lg focus:border-blue-500 outline-none">
+                        <option value="general">Etiquetado General (NOM-050)</option>
+                        <option value="textil">Textiles/Ropa (NOM-004)</option>
+                        <option value="electrico">Electrónicos (NOM-001/024)</option>
+                        <option value="juguete">Juguetes (NOM-252)</option>
+                    </select>
+                    <p class="text-xs text-slate-400 mt-2">* El análisis sugerirá si requieres un agente aduanal especializado.</p>
+                </section>
+
+                <button onclick="ejecutarAnalisis()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-xl shadow-blue-200 shadow-lg transition-all transform active:scale-95">
+                    CALCULAR RIESGO Y MARGEN
+                </button>
             </div>
 
-            <div>
-                <label class="block font-medium">Precio de Venta Sugerido (MXN):</label>
-                <input type="number" id="precioVenta" class="w-full border p-2 rounded mb-3" placeholder="0.00">
-                
-                <label class="block font-medium">¿Requiere NOM específica?</label>
-                <select id="nomRequerida" class="w-full border p-2 rounded mb-3">
-                    <option value="0">No (Etiquetado general NOM-050)</option>
-                    <option value="5000">Sí (Certificación compleja / Salud)</option>
-                </select>
-            </div>
-        </div>
-
-        <button onclick="calcularRiesgo()" class="w-full bg-blue-600 text-white font-bold py-3 rounded mt-4 hover:bg-blue-700">
-            ANALIZAR VIABILIDAD
-        </button>
-
-        <div id="resultado" class="hidden mt-8 p-6 rounded-lg border">
-            <h2 class="text-xl font-bold mb-4">Resultado del Análisis</h2>
-            <div id="semaforo" class="h-4 w-full rounded mb-4"></div>
-            <div id="detalles" class="space-y-2">
+            <div class="space-y-6">
+                <div id="resultadoCard" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hidden">
+                    <div id="semaforo" class="h-3 w-full rounded-full bg-slate-200 mb-4"></div>
+                    <h3 id="statusTexto" class="text-xl font-black mb-2 uppercase italic">Análisis listo</h3>
+                    <div id="desglose" class="text-sm space-y-2"></div>
                 </div>
+
+                <div class="bg-slate-800 text-white p-6 rounded-xl shadow-lg">
+                    <h3 class="font-bold border-b border-slate-700 pb-2 mb-4"><i class="fas fa-calendar-star mr-2 text-yellow-400"></i> Eventos México</h3>
+                    <ul class="text-sm space-y-3">
+                        <li class="flex justify-between"><span>Hot Sale:</span> <span class="text-blue-300 font-mono">Mayo 2026</span></li>
+                        <li class="flex justify-between"><span>Buen Fin:</span> <span class="text-blue-300 font-mono">Nov 2026</span></li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
-    </div>
+    </main>
 
     <script>
-        function calcularRiesgo() {
-            // 1. Obtener valores
-            const costoProd = parseFloat(document.getElementById('costoProducto').value) || 0;
+        function ejecutarAnalisis() {
+            const costoP = parseFloat(document.getElementById('costoProducto').value) || 0;
             const envio = parseFloat(document.getElementById('costoEnvio').value) || 0;
             const unidades = parseInt(document.getElementById('unidades').value) || 1;
             const precioV = parseFloat(document.getElementById('precioVenta').value) || 0;
-            const costoNOM = parseFloat(document.getElementById('nomRequerida').value);
 
-            // 2. Cálculos Fiscales México (Simulación básica)
-            const inversionTotal = (costoProd * unidades) + envio + costoNOM;
-            const costoUnitarioFinal = inversionTotal / unidades;
+            // Lógica fiscal y operativa
+            const inversionXUnidad = ( (costoP * unidades) + envio ) / unidades;
+            const comisionPlataforma = precioV * 0.17; // Promedio ML/Amazon
+            const impuestosRetenciones = precioV * 0.09; // Estimado ISR + IVA acreditable
             
-            // Impuestos y Comisiones (Promedio Mercado Libre/Amazon 15%)
-            const comisionMarketplace = precioV * 0.15;
-            const ivaVenta = precioV * 0.16;
-            const retencionISR = precioV * 0.01; // Retención plataforma tecnológica
-            
-            const utilidadNeta = precioV - costoUnitarioFinal - comisionMarketplace - ivaVenta - retencionISR;
-            const margen = (utilidadNeta / precioV) * 100;
+            const utilidad = precioV - inversionXUnidad - comisionPlataforma - impuestosRetenciones;
+            const margen = (utilidad / precioV) * 100;
 
-            // 3. Mostrar Resultados
-            document.getElementById('resultado').classList.remove('hidden');
+            const resCard = document.getElementById('resultadoCard');
             const semaforo = document.getElementById('semaforo');
-            const detalles = document.getElementById('detalles');
+            const status = document.getElementById('statusTexto');
+            const desglose = document.getElementById('desglose');
 
-            let color = '';
-            let mensaje = '';
+            resCard.classList.remove('hidden');
 
-            if (margen > 30) {
-                color = 'semaforo-verde';
-                mensaje = "¡Excelente viabilidad! El margen supera el 30%.";
+            if(margen > 25) {
+                semaforo.className = "h-3 w-full rounded-full bg-green-500";
+                status.innerText = "VIABLE (BAJO RIESGO)";
+                status.className = "text-xl font-black mb-2 uppercase italic text-green-600";
             } else if (margen > 10) {
-                color = 'semaforo-amarillo';
-                mensaje = "Riesgo Moderado. Margen ajustado, revisa costos operativos.";
+                semaforo.className = "h-3 w-full rounded-full bg-yellow-500";
+                status.innerText = "RIESGO MODERADO";
+                status.className = "text-xl font-black mb-2 uppercase italic text-yellow-600";
             } else {
-                color = 'semaforo-rojo';
-                mensaje = "Alto Riesgo. Margen muy bajo o negativo tras impuestos del SAT.";
+                semaforo.className = "h-3 w-full rounded-full bg-red-500";
+                status.innerText = "ALTO RIESGO / NO VIABLE";
+                status.className = "text-xl font-black mb-2 uppercase italic text-red-600";
             }
 
-            semaforo.className = `h-4 w-full rounded mb-4 ${color}`;
-            detalles.innerHTML = `
-                <p><strong>Inversión por unidad:</strong> $${costoUnitarioFinal.toFixed(2)} MXN</p>
-                <p><strong>Utilidad Estimada:</strong> $${utilidadNeta.toFixed(2)} MXN</p>
-                <p><strong>Margen de Ganancia:</strong> ${margen.toFixed(2)}%</p>
-                <p class="mt-4 font-bold">${mensaje}</p>
-                <hr>
-                <p class="text-sm text-gray-600 italic">*Incluye estimación de IVA, ISR y comisión de Marketplace.</p>
+            desglose.innerHTML = `
+                <div class="flex justify-between"><span>Inversión Unit:</span> <span>$${inversionXUnidad.toFixed(2)}</span></div>
+                <div class="flex justify-between"><span>Comisiones:</span> <span>$${comisionMarketplace.toFixed(2)}</span></div>
+                <div class="flex justify-between font-bold border-t pt-2 mt-2"><span>Utilidad Neta:</span> <span>$${utilidad.toFixed(2)}</span></div>
+                <div class="flex justify-between font-bold text-blue-600 text-lg"><span>Margen:</span> <span>${margen.toFixed(1)}%</span></div>
             `;
         }
     </script>
