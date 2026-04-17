@@ -3,229 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riesgo Cero - Dashboard de Importación Pro</title>
+    <title>QUESTA — Inteligencia para Importadores</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #F8F5EF;
+            --navy: #1B3A6B;
+            --blue: #2D5BE3;
+            --green: #0D9E6E;
+        }
+        body { font-family: 'DM Sans', sans-serif; background-color: var(--bg); color: #1a1a2e; }
+        h1, h2, .serif { font-family: 'DM Serif Display', serif; }
+        .btn-navy { background: var(--navy); color: white; transition: all 0.3s; }
+        .btn-navy:hover { background: var(--blue); transform: translateY(-2px); }
+    </style>
 </head>
-<body class="bg-slate-100 font-sans text-slate-900">
+<body>
 
-    <header class="bg-blue-950 text-white p-5 shadow-xl border-b-4 border-blue-500">
+    <nav class="fixed top-0 w-full bg-[#F8F5EF]/90 backdrop-blur-md z-50 border-b border-gray-200 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <i class="fas fa-chart-line text-blue-400 text-3xl"></i>
-                <h1 class="text-3xl font-extrabold tracking-tighter">RIESGO<span class="text-blue-400">CERO</span></h1>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-[#1B3A6B] rounded-full flex items-center justify-center text-white font-serif italic text-xl">Q</div>
+                <span class="text-2xl font-serif text-[#1B3A6B] tracking-tight">UESTA</span>
             </div>
-            <div class="text-right">
-                <span class="text-xs bg-blue-800 px-3 py-1 rounded-full font-bold">MÉXICO v1.1</span>
-                <p class="text-xs text-blue-300 mt-1">Analista de Inteligencia Comercial</p>
+            <a href="#analizador" class="btn-navy px-6 py-2 rounded-lg font-bold text-sm">Analizar ahora →</a>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-1.5 rounded-full text-xs font-bold text-gray-500 mb-8 shadow-sm">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> EXCLUSIVO PARA MÉXICO
+            </div>
+            <h1 class="text-6xl md:text-7xl text-[#1B3A6B] leading-[1.1] mb-6">De AliExpress a <br><span class="italic text-[#2D5BE3]">vender en grande</span></h1>
+            <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Calcula rentabilidad, impuestos del SAT, NOMs y comisiones de Amazon o Mercado Libre en segundos.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="px-4 py-2 bg-white rounded-lg border border-gray-100 shadow-sm text-xs font-bold">🛒 AliExpress</div>
+                <div class="px-4 py-2 bg-white rounded-lg border border-gray-100 shadow-sm text-xs font-bold">📦 Mercado Libre</div>
+                <div class="px-4 py-2 bg-white rounded-lg border border-gray-100 shadow-sm text-xs font-bold">🎵 TikTok Shop</div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
-        
-        <section class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-            <h2 class="text-2xl font-bold mb-6 text-slate-800 flex items-center gap-3">
-                <i class="fas fa-file-invoice-dollar text-blue-600"></i> Configuración de la Importación
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Costo Unitario (MXN equiv.)</label>
-                    <div class="relative">
-                        <span class="absolute left-3 top-3.5 text-slate-400">$</span>
-                        <input type="number" id="costoProducto" class="w-full border-2 border-slate-200 p-3 pl-8 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="0.00">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Costo Envío Total a México</label>
-                    <div class="relative">
-                        <span class="absolute left-3 top-3.5 text-slate-400">$</span>
-                        <input type="number" id="costoEnvio" class="w-full border-2 border-slate-200 p-3 pl-8 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="0.00">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Unidades en el pedido</label>
-                    <input type="number" id="unidades" class="w-full border-2 border-slate-200 p-3 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="1">
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Precio de Venta Sugerido</label>
-                    <div class="relative">
-                        <span class="absolute left-3 top-3.5 text-slate-400">$</span>
-                        <input type="number" id="precioVenta" class="w-full border-2 border-slate-200 p-3 pl-8 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="0.00">
-                    </div>
-                </div>
+    <section id="analizador" class="py-20 bg-white border-t border-gray-100">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl text-[#1B3A6B] mb-4">Configura tu Operación</h2>
+                <p class="text-gray-500">Ingresa los costos reales para obtener tu semáforo de riesgo.</p>
             </div>
-            <button onclick="ejecutarAnalisisPro()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-4 rounded-xl shadow-blue-300 shadow-lg transition-all transform active:scale-95 mt-8 text-lg">
-                <i class="fas fa-sync-alt mr-2"></i> GENERAR DASHBOARD DE RIESGO
-            </button>
-        </section>
 
-        <section id="resultadosDashboard" class="hidden space-y-8">
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                
-                <div class="md:col-span-2 bg-white p-8 rounded-2xl shadow-lg border border-slate-200 flex items-center gap-6">
-                    <div id="iconoSemaforo" class="text-7xl p-6 rounded-full">
-                        <i class="fas fa-traffic-light"></i>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-1 space-y-6 bg-[#F8F5EF] p-8 rounded-3xl border border-gray-200">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Costo Unitario (MXN)</label>
+                        <input type="number" id="costoP" class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="0.00">
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Estado de Viabilidad</h3>
-                        <p id="statusTexto" class="text-4xl font-extrabold text-slate-900 leading-tight">Esperando análisis...</p>
-                        <p id="consejoRapido" class="text-slate-600 mt-2"></p>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Envío Total a México</label>
+                        <input type="number" id="envio" class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="0.00">
                     </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Unidades</label>
+                        <input type="number" id="unds" class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="100">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Precio Venta (MXN)</label>
+                        <input type="number" id="venta" class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="0.00">
+                    </div>
+                    <button onclick="realizarAnalisisQuesta()" class="w-full btn-navy py-4 rounded-xl font-bold shadow-xl">
+                        GENERAR REPORTE QUESTA
+                    </button>
                 </div>
 
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 text-center">
-                    <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">Nivel de Riesgo Operativo</h3>
-                    <div id="porcentajeRiesgo" class="text-5xl font-black">--%</div>
-                    <div class="w-full bg-slate-100 rounded-full h-2 mt-4">
-                        <div id="barraRiesgo" class="h-2 rounded-full bg-slate-400" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
-                <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-2xl shadow border border-slate-100 flex items-center gap-4">
-                        <i class="fas fa-money-bill-wave text-green-500 text-3xl p-4 bg-green-50 rounded-full"></i>
-                        <div>
-                            <p class="text-sm text-slate-500">Utilidad Neta Estimada</p>
-                            <p id="utilidadMonto" class="text-3xl font-bold">$0.00</p>
+                <div id="resultado" class="lg:col-span-2 hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-3xl border-2 border-gray-100 shadow-sm flex items-center gap-4">
+                            <div id="semaforoIcono" class="text-4xl w-16 h-16 rounded-full flex items-center justify-center">
+                                <i class="fas fa-traffic-light"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-gray-400 uppercase">Viabilidad</h4>
+                                <p id="statusMsg" class="text-xl font-bold text-[#1B3A6B]">--</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-3xl border-2 border-gray-100 shadow-sm">
+                            <h4 class="text-xs font-bold text-gray-400 uppercase">Margen de Ganancia</h4>
+                            <p id="margenTxt" class="text-3xl font-serif text-[#0D9E6E]">0.0%</p>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-2xl shadow border border-slate-100 flex items-center gap-4">
-                        <i class="fas fa-percent text-blue-500 text-3xl p-4 bg-blue-50 rounded-full"></i>
-                        <div>
-                            <p class="text-sm text-slate-500">Margen de Ganancia</p>
-                            <p id="margenPorcentaje" class="text-3xl font-bold">0.0%</p>
+                    
+                    <div class="bg-white p-8 rounded-3xl border-2 border-gray-100 shadow-sm">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-serif text-2xl text-[#1B3A6B]">Desglose Financiero</h3>
+                            <span class="text-xs font-bold bg-blue-50 text-blue-600 px-3 py-1 rounded-full italic">Análisis IA Activo</span>
                         </div>
+                        <canvas id="questaChart" height="100"></canvas>
+                        <div id="desgloseTxt" class="mt-8 grid grid-cols-2 gap-4 text-sm text-gray-600">
+                            </div>
                     </div>
-                    <div class="bg-white p-6 rounded-2xl shadow border border-slate-100 flex items-center gap-4">
-                        <i class="fas fa-hand-holding-usd text-red-500 text-3xl p-4 bg-red-50 rounded-full"></i>
-                        <div>
-                            <p class="text-sm text-slate-500">Impuestos y Comisiones (SAT/ML)</p>
-                            <p id="impuestosMonto" class="text-3xl font-bold">$0.00</p>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow border border-slate-100 flex items-center gap-4">
-                        <i class="fas fa-box-open text-orange-500 text-3xl p-4 bg-orange-50 rounded-full"></i>
-                        <div>
-                            <p class="text-sm text-slate-500">Costo Total por Unidad (Landed)</p>
-                            <p id="costoLanded" class="text-3xl font-bold">$0.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                    <h3 class="text-lg font-bold mb-4 text-center">Desglose del Precio de Venta</h3>
-                    <canvas id="graficoDesglose"></canvas>
                 </div>
             </div>
+        </div>
+    </section>
 
-        </section>
-    </main>
+    <footer class="bg-[#1B3A6B] py-12 px-6 text-white/50 text-sm text-center">
+        <p>© 2026 QUESTA.LAT - Inteligencia Comercial para el Mercado Mexicano.</p>
+    </footer>
 
     <script>
-        let chartInstance = null; // Para destruir el gráfico anterior al recalcular
+        let myChart = null;
 
-        function ejecutarAnalisisPro() {
-            // 1. Obtener valores y validarlos
-            const costoP = parseFloat(document.getElementById('costoProducto').value) || 0;
-            const envio = parseFloat(document.getElementById('costoEnvio').value) || 0;
-            const unidades = parseInt(document.getElementById('unidades').value) || 0;
-            const precioV = parseFloat(document.getElementById('precioVenta').value) || 0;
+        function realizarAnalisisQuesta() {
+            const cp = parseFloat(document.getElementById('costoP').value) || 0;
+            const en = parseFloat(document.getElementById('envio').value) || 0;
+            const un = parseFloat(document.getElementById('unds').value) || 1;
+            const ve = parseFloat(document.getElementById('venta').value) || 0;
 
-            if(unidades <= 0 || precioV <= 0 || costoP <= 0) {
-                alert("Por favor, ingresa costos, unidades y precio de venta válidos.");
-                return;
-            }
+            if(ve <= 0) return alert("Ingresa un precio de venta");
 
-            // 2. Lógica fiscal y operativa (Simulación México PRO)
-            const inversionTotal = (costoP * unidades) + envio;
-            const costoLanded = inversionTotal / unidades;
-            const comisionMarketplace = precioV * 0.17; // Promedio ML/Amazon
-            const impuestosIVA = precioV * 0.16; // IVA sobre la venta
-            const retencionISR = precioV * 0.01; // Retención ISR plataformas tecnológicas
-            const gastosOperativos = precioV * 0.05; // Etiquetado, empaque extra, devoluciones
+            // Lógica fiscal MX
+            const landedUnit = ( (cp * un) + en ) / un;
+            const comMarket = ve * 0.17; 
+            const satImp = ve * 0.09; 
+            const util = ve - landedUnit - comMarket - satImp;
+            const marg = (util / ve) * 100;
 
-            const utilidad = precioV - costoLanded - comisionMarketplace - impuestosIVA - retencionISR - gastosOperativos;
-            const margen = (utilidad / precioV) * 100;
+            document.getElementById('resultado').classList.remove('hidden');
 
-            // 3. Cálculo de Porcentaje de Riesgo (Lógica del Semáforo invertida)
-            // Riesgo es alto si el margen es bajo.
-            let porcentajeRiesgo = 0;
-            if(margen < 0) porcentajeRiesgo = 100;
-            else if (margen < 15) porcentajeRiesgo = 85;
-            else if (margen < 30) porcentajeRiesgo = 50;
-            else porcentajeRiesgo = 15;
+            const sem = document.getElementById('semaforoIcono');
+            const msg = document.getElementById('statusMsg');
+            const margTxt = document.getElementById('margenTxt');
 
-            // 4. Actualizar la Interfaz (Dashboard)
-            document.getElementById('resultadosDashboard').classList.remove('hidden');
-            
-            // Actualizar Semáforo
-            const iconoSel = document.getElementById('iconoSemaforo');
-            const statusSel = document.getElementById('statusTexto');
-            const consejoSel = document.getElementById('consejoRapido');
-
-            if(margen > 30) {
-                iconoSel.className = "text-7xl p-6 rounded-full bg-green-100 text-green-600";
-                statusSel.innerText = "ALTA VIABILIDAD";
-                statusSel.className = "text-4xl font-extrabold text-green-700";
-                consejoSel.innerText = "Margen excelente. Procede a analizar la tendencia en TikTok.";
-            } else if (margen > 15) {
-                iconoSel.className = "text-7xl p-6 rounded-full bg-yellow-100 text-yellow-600";
-                statusSel.innerText = "RIESGO MODERADO";
-                statusSel.className = "text-4xl font-extrabold text-yellow-700";
-                consejoSel.innerText = "Margen ajustado. Revisa tus costos aduanales y de envío.";
+            if(marg > 25) {
+                sem.className = "text-4xl w-16 h-16 rounded-full flex items-center justify-center bg-green-100 text-green-600";
+                msg.innerText = "¡ADELANTE! BAJO RIESGO";
+                margTxt.className = "text-3xl font-serif text-[#0D9E6E]";
+            } else if (marg > 10) {
+                sem.className = "text-4xl w-16 h-16 rounded-full flex items-center justify-center bg-yellow-100 text-yellow-600";
+                msg.innerText = "PROCEDER CON CAUTELA";
+                margTxt.className = "text-3xl font-serif text-yellow-600";
             } else {
-                iconoSel.className = "text-7xl p-6 rounded-full bg-red-100 text-red-600";
-                statusSel.innerText = "ALTO RIESGO / NO VIABLE";
-                statusSel.className = "text-4xl font-extrabold text-red-700";
-                consejoSel.innerText = "Este producto no es rentable tras pagar impuestos del SAT.";
+                sem.className = "text-4xl w-16 h-16 rounded-full flex items-center justify-center bg-red-100 text-red-600";
+                msg.innerText = "ALTO RIESGO / NO RENTABLE";
+                margTxt.className = "text-3xl font-serif text-red-600";
             }
 
-            // Actualizar Riesgo %
-            const pRiesgoSel = document.getElementById('porcentajeRiesgo');
-            const bRiesgoSel = document.getElementById('barraRiesgo');
-            pRiesgoSel.innerText = `${porcentajeRiesgo}%`;
-            bRiesgoSel.style.width = `${porcentajeRiesgo}%`;
-            if(porcentajeRiesgo > 70) bRiesgoSel.className = "h-2 rounded-full bg-red-600";
-            else if(porcentajeRiesgo > 40) bRiesgoSel.className = "h-2 rounded-full bg-yellow-600";
-            else bRiesgoSel.className = "h-2 rounded-full bg-green-600";
+            margTxt.innerText = marg.toFixed(1) + "%";
 
-            // Actualizar Métricas de Dinero
-            document.getElementById('utilidadMonto').innerText = `$${utilidad.toFixed(2)}`;
-            document.getElementById('margenPorcentaje').innerText = `${margen.toFixed(1)}%`;
-            document.getElementById('impuestosMonto').innerText = `$${(comisionMarketplace + impuestosIVA + retencionISR).toFixed(2)}`;
-            document.getElementById('costoLanded').innerText = `$${costoLanded.toFixed(2)}`;
+            document.getElementById('desgloseTxt').innerHTML = `
+                <div class="border-b pb-2"><span>Inversión Unit:</span> <b class="text-gray-900">$${landedUnit.toFixed(2)}</b></div>
+                <div class="border-b pb-2"><span>Retención SAT:</span> <b class="text-gray-900">$${satImp.toFixed(2)}</b></div>
+                <div class="border-b pb-2"><span>Comisión Mkt:</span> <b class="text-gray-900">$${comMarket.toFixed(2)}</b></div>
+                <div class="border-b pb-2"><span>Utilidad Neta:</span> <b class="text-gray-900">$${util.toFixed(2)}</b></div>
+            `;
 
-            // 5. Generar o Actualizar el Gráfico
-            if (chartInstance) { chartInstance.destroy(); }
-            const ctx = document.getElementById('graficoDesglose').getContext('2d');
-            chartInstance = new Chart(ctx, {
-                type: 'doughnut',
+            if(myChart) myChart.destroy();
+            const ctx = document.getElementById('questaChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'bar',
                 data: {
-                    labels: ['Utilidad Neta', 'Costo Producto+Envío', 'Impuestos y Comisiones'],
+                    labels: ['Costo Producto', 'Marketplace', 'SAT (ISR/IVA)', 'Utilidad Neta'],
                     datasets: [{
-                        data: [
-                            utilidad > 0 ? utilidad.toFixed(2) : 0, 
-                            costoLanded.toFixed(2), 
-                            (comisionMarketplace + impuestosIVA + retencionISR + gastosOperativos).toFixed(2)
-                        ],
-                        backgroundColor: ['#22c55e', '#f97316', '#ef4444'],
-                        borderWidth: 0
+                        data: [landedUnit, comMarket, satImp, util > 0 ? util : 0],
+                        backgroundColor: ['#1B3A6B', '#2D5BE3', '#ef4444', '#0D9E6E'],
+                        borderRadius: 8
                     }]
                 },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { position: 'bottom' } }
+                options: { 
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } }
                 }
-                
             });
-            // Asegurarnos de que el usuario vea los resultados bajando automáticamente
-            window.scrollTo({ top: document.getElementById('resultadosDashboard').offsetTop, behavior: 'smooth' });
+            window.scrollTo({ top: document.getElementById('resultado').offsetTop - 100, behavior: 'smooth' });
         }
     </script>
 </body>
